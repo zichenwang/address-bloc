@@ -1,4 +1,5 @@
 require_relative 'entry'
+require "csv"
 
 class AddressBook
 
@@ -29,5 +30,16 @@ class AddressBook
    end
  end
 
+ def import_from_csv(file_name)
+   csv_text = File.read(file_name)
+   csv = CSV.parse(csv_text, headers: true, skip_blanks: true)
+
+   #iterate over the CSV::Table object's rows
+   csv.each do |row|
+     row_hash = row.to_hash
+     #convert each row_hash to an Entry
+     add_entry(row_hash["name"], row_hash["phone_number"], row_hash["email"])
+   end
+ end
 
 end
