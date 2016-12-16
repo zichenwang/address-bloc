@@ -14,7 +14,8 @@ class MenuController
     puts "2 - Create an entry"
     puts "3 - Search for an entry"
     puts "4 - Import entries from a CSV"
-    puts "5 - Exit"
+    puts "5 - Delete all entries"
+    puts "6 - Exit"
     print "Enter your selection: "
 
     #retrieve user input from the command line
@@ -38,6 +39,10 @@ class MenuController
          read_csv
          main_menu
        when 5
+         system "clear"
+         delete_all
+         main_menu
+       when 6
          puts "Good-bye!"
          exit(0)#terminate the program
          #0 signals the program is exiting without an error
@@ -185,6 +190,17 @@ class MenuController
         puts "#{selection} is not a valid input"
         puts entry.to_s
         search_submenu(entry)
+    end
+  end
+
+  def delete_all
+    print "Are you sure? (Y/N): "
+
+    selection = gets.chomp
+
+    if selection == "Y"
+      address_book.entries.clear
+      puts "now #{address_book.entries.count} entry"
     end
   end
 
